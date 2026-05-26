@@ -37,16 +37,10 @@ resource "helm_release" "cilium" {
 
   values = [local.values]
 
-  dynamic "set" {
-    for_each = var.cluster_type == "oke" ? [
-      { name = "k8sServiceHost", value = local.endpoint_parts[0] },
-      { name = "k8sServicePort", value = local.endpoint_parts[1] }
-    ] : []
-    content {
-      name  = set.value.name
-      value = set.value.value
-    }
-  }
+  set = var.cluster_type == "oke" ? [
+    { name = "k8sServiceHost", value = local.endpoint_parts[0] },
+    { name = "k8sServicePort", value = local.endpoint_parts[1] }
+  ] : []
 
   lifecycle {
     ignore_changes = all
