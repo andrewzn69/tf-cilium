@@ -19,6 +19,11 @@ variable "cluster_endpoint" {
     condition     = var.cluster_endpoint == null || can(regex("^https://", var.cluster_endpoint))
     error_message = "cluster_endpoint must start with https://"
   }
+
+  validation {
+    condition     = var.values_default != "oke" || var.cluster_endpoint != null
+    error_message = "cluster_endpoint is required when values_default is oke"
+  }
 }
 
 variable "values_default" {
