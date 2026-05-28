@@ -40,13 +40,13 @@ module "cilium" {
   source = "git::https://github.com/andrewzn69/tf-cilium.git?ref=<version>"
 
   cilium_version = "<cilium-version>"
-  cluster_type   = "<talos|oke>"  # required when values_url and values_local are not set
+  values_default   = "<talos|oke>"  # required when values_url and values_local are not set
 }
 ```
 
 ## Supported Cluster Types
 
-| `cluster_type` | Default values preset | Notes                                                          |
+| `values_default` | Default values preset | Notes                                                          |
 | -------------- | --------------------- | -------------------------------------------------------------- |
 | `talos`        | `values/talos.yaml`   | Includes Talos-specific cgroup, capability, and DNS settings   |
 | `oke`          | `values/oke.yaml`     | Kubernetes IPAM, kube-proxy replacement, nodeinit, gateway API |

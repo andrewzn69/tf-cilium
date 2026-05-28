@@ -18,7 +18,7 @@ locals {
   values = (
     var.values_url != null ? data.http.values[0].response_body :
     var.values_local != null ? var.values_local :
-    file("${path.module}/values/${var.cluster_type}.yaml")
+    file("${path.module}/values/${var.values_default}.yaml")
   )
 
   endpoint_parts = var.cluster_endpoint != null ? split(":", trimprefix(var.cluster_endpoint, "https://")) : []
