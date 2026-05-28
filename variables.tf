@@ -12,23 +12,18 @@ variable "cilium_version" {
 
 variable "cluster_endpoint" {
   type        = string
-  description = "Kubernetes API endpoint in the format https://host:port. Required when cluster_type is oke."
+  description = "Kubernetes API endpoint in the format https://host:port. When provided, injects k8sServiceHost and k8sServicePort into Cilium. Required for OKE if k8sServiceHost and k8sServicePort are not present in your values file."
   default     = null
 
   validation {
     condition     = var.cluster_endpoint == null || can(regex("^https://", var.cluster_endpoint))
     error_message = "cluster_endpoint must start with https://"
   }
-
-  validation {
-    condition     = var.cluster_type != "oke" || var.cluster_endpoint != null
-    error_message = "cluster_endpoint is required when cluster_type is oke"
-  }
 }
 
 variable "cluster_type" {
   type        = string
-  description = "Type of Kubernetes cluster. Selects the default Cilium values preset when values_url and values_local are not set. Required when neither is provided. For OKE, must always be set to inject k8sServiceHost and k8sServicePort."
+  description = "Type of Kubernetes cluster. Selects the default Cilium values preset when values_url and values_local are not set. Required when neither is provided."
   default     = null
   nullable    = true
 

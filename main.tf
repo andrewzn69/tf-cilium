@@ -37,7 +37,7 @@ resource "helm_release" "cilium" {
 
   values = [local.values]
 
-  set = var.cluster_type == "oke" ? [
+  set = var.cluster_endpoint != null ? [
     { name = "k8sServiceHost", value = local.endpoint_parts[0] },
     { name = "k8sServicePort", value = local.endpoint_parts[1] }
   ] : []
