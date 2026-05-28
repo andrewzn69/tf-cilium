@@ -44,7 +44,6 @@ All examples expect these variables:
 
 ```hcl
 cilium_version                    = "<cilium-version>"
-cluster_type                      = "<talos|oke>"
 kubernetes_host                   = "https://<control-plane-ip>:6443"
 kubernetes_client_certificate     = "<client-certificate-pem>"
 kubernetes_client_key             = "<client-key-pem>"
