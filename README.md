@@ -44,12 +44,12 @@ module "cilium" {
 }
 ```
 
-## Supported Cluster Types
+## Built-in Value Presets
 
 | `values_default` | Default values preset | Notes                                                          |
-| -------------- | --------------------- | -------------------------------------------------------------- |
-| `talos`        | `values/talos.yaml`   | Includes Talos-specific cgroup, capability, and DNS settings   |
-| `oke`          | `values/oke.yaml`     | Kubernetes IPAM, kube-proxy replacement, nodeinit, gateway API |
+| ---------------- | --------------------- | -------------------------------------------------------------- |
+| `talos`          | `values/talos.yaml`   | Includes Talos-specific cgroup, capability, and DNS settings   |
+| `oke`            | `values/oke.yaml`     | Kubernetes IPAM, kube-proxy replacement, nodeinit, gateway API |
 
 ## OKE: k8sServiceHost and k8sServicePort
 
