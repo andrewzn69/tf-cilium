@@ -28,11 +28,18 @@ variable "cluster_endpoint" {
 
 variable "cluster_type" {
   type        = string
-  description = "Type of Kubernetes cluster. Selects the default Cilium values preset."
+  description = "Type of Kubernetes cluster. Selects the default Cilium values preset when values_url and values_local are not set. Required when neither is provided. For OKE, must always be set to inject k8sServiceHost and k8sServicePort."
+  default     = null
+  nullable    = true
 
   validation {
-    condition     = contains(["talos", "oke"], var.cluster_type)
+    condition     = var.cluster_type == null || contains(["talos", "oke"], var.cluster_type)
     error_message = "Supported cluster types: talos, oke"
+  }
+
+  validation {
+    condition     = !(var.cluster_type == null && var.values_url == null && var.values_local == null)
+    error_message = "cluster_type is required when values_url and values_local are not set"
   }
 }
 
