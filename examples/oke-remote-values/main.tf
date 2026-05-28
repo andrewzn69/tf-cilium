@@ -22,7 +22,6 @@ module "cilium" {
   source = "../../"
 
   cilium_version   = var.cilium_version
-  cluster_type     = "oke"
   cluster_endpoint = var.cluster_endpoint
   values_url       = var.values_url
 }

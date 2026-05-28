@@ -12,7 +12,7 @@ variable "cilium_version" {
 
 variable "cluster_endpoint" {
   type        = string
-  description = "Kubernetes API endpoint in the format https://host:port. Required when cluster_type is oke."
+  description = "Kubernetes API endpoint in the format https://host:port. When provided, injects k8sServiceHost and k8sServicePort into Cilium. Required for OKE if k8sServiceHost and k8sServicePort are not present in your values file."
   default     = null
 
   validation {
@@ -21,18 +21,25 @@ variable "cluster_endpoint" {
   }
 
   validation {
-    condition     = var.cluster_type != "oke" || var.cluster_endpoint != null
-    error_message = "cluster_endpoint is required when cluster_type is oke"
+    condition     = var.values_default != "oke" || var.cluster_endpoint != null
+    error_message = "cluster_endpoint is required when values_default is oke"
   }
 }
 
-variable "cluster_type" {
+variable "values_default" {
   type        = string
-  description = "Type of Kubernetes cluster. Selects the default Cilium values preset."
+  description = "Selects a built-in Cilium values preset. Required when values_url and values_local are not set."
+  default     = null
+  nullable    = true
 
   validation {
-    condition     = contains(["talos", "oke"], var.cluster_type)
-    error_message = "Supported cluster types: talos, oke"
+    condition     = var.values_default == null || contains(["talos", "oke"], var.values_default)
+    error_message = "Supported presets: talos, oke"
+  }
+
+  validation {
+    condition     = !(var.values_default == null && var.values_url == null && var.values_local == null)
+    error_message = "one of values_default, values_url, or values_local must be set"
   }
 }
 
